@@ -30,7 +30,7 @@ class database extends Model
         return $query->get();
     }
 
-    public function join1($from, $to)
+    public function join1($from = null, $to = null)
     {
         $query = DB::table('user')
             ->leftJoin('karyawan', 'user.id_user', '=', 'karyawan.id_user')

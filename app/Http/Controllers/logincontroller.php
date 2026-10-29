@@ -38,8 +38,8 @@ class logincontroller extends Controller
 
        public function home(Request $Request){
         if (session('u')){
-            $from = $Request->input('from', '');
-            $to = $Request->input('to', '');
+            $from = $Request->input('from');
+            $to = $Request->input('to');
             $jalur = new database;
             $hello['data'] = $jalur->join1($from, $to);
             return view('home', $hello);
@@ -85,7 +85,7 @@ class logincontroller extends Controller
     {
         $jalur = new database;
 
-        return $jalur->join1($request->input('from', ''), $request->input('to', ''));
+        return $jalur->join1($request->input('from'), $request->input('to'));
     }
 
     public function logout(){
@@ -193,7 +193,7 @@ public function zano(Request $Request)
     public function karyawan()
     {
         $jalur = new database;
-        $data['karyawan'] = $jalur->join1('', '');
+        $data['karyawan'] = $jalur->join1();
 
         return view('karyawan', $data);
     }
