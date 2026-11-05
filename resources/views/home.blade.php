@@ -73,6 +73,6 @@
         }
         ?>
     </tbody>
-</table> <!-- INI TAG YANG TADI KETINGGALAN -->
+</table> 
 
 @endsection
