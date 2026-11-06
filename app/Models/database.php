@@ -30,30 +30,23 @@ class database extends Model
         return $query->get();
     }
 
-    public function join1($from = null, $to = null)
+public function join1($from = null, $to = null)
     {
-        $query = DB::table('user')
-            ->leftJoin('karyawan', 'user.id_user', '=', 'karyawan.id_user')
-            ->leftJoin('jabatan', 'karyawan.id_jabatan', '=', 'jabatan.id_jabatan')
-            ->leftJoin('agama', 'karyawan.id_agama', '=', 'agama.id_agama')
+        $query = DB::table('mekanik')
+            ->leftJoin('users', 'mekanik.user_id', '=', 'users.id')
             ->select(
-                'user.*',
-                'karyawan.id_karyawan',
-                'karyawan.nama_kry',
-                'karyawan.alamat_kry',
-                'karyawan.jk_kry',
-                'karyawan.id_jabatan',
-                'karyawan.id_agama',
-                'jabatan.nama_jabatan',
-                'agama.nama_agama'
+                'mekanik.*',
+                'users.nama as nama_user',
+                'users.email',
+                'users.role'
             );
 
         if ($from) {
-            $query->whereDate('user.created_at', '>=', $from);
+            $query->whereDate('mekanik.created_at', '>=', $from);
         }
 
         if ($to) {
-            $query->whereDate('user.created_at', '<=', $to);
+            $query->whereDate('mekanik.created_at', '<=', $to);
         }
 
         return $query->get();

@@ -1,6 +1,6 @@
 @include('header')
 @include('menu')
-<main>
+<main id="main" class="main">
     @yield('content')
 </main>
 @include('footer')

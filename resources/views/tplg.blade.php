@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Pelanggan</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-</head>
-<body class="p-4 bg-light">
+@extends('template')
+@section('content')
 
     <h1 class="mb-4 fw-bold">Input Pelanggan</h1>
 
@@ -21,6 +14,10 @@
         <input type="text" name="alamat" class="form-control" required>
         <br>
 
+        <label class="fw-semibold">Email:</label>
+        <input type="text" name="email" class="form-control" required>
+        <br>
+
         <label class="fw-semibold">No HP:</label>
         <input type="text" name="no_hp" class="form-control" required>
         <br>
@@ -30,5 +27,4 @@
         
     </form>
 
-</body>
-</html>
+@endsection

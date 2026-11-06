@@ -12,15 +12,23 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    // 1. Kunci koneksi ke nama tabel 'users' di database Anda
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    // 2. Ubah 'name' menjadi 'nama' agar sesuai dengan kolom tabel database Anda
     protected $fillable = [
-        'name',
+        'nama', 
         'email',
         'password',
+        'role',
+        'no_hp',
+        'foto',
+        'is_active',
     ];
 
     /**

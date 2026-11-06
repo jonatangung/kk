@@ -8,11 +8,8 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class UsersExport implements FromCollection, WithHeadings
 {
-    private Collection $users;
-
-    public function __construct(Collection $users)
+    public function __construct(private Collection $users)
     {
-        $this->users = $users;
     }
 
     public function collection(): Collection
@@ -20,13 +17,13 @@ class UsersExport implements FromCollection, WithHeadings
         return $this->users->values()->map(function (object $user, int $index): array {
             return [
                 $index + 1,
-                $user->username,
+                $user->nama_user ?? $user->nama,
                 $user->email,
-                $user->level,
-                $user->nama_kry ?? '-',
-                $user->alamat_kry ?? '-',
-                $user->nama_jabatan ?? '-',
-                $user->nama_agama ?? '-',
+                $user->role ?? '-',
+                $user->nama,
+                $user->no_hp ?? '-',
+                $user->spesialisasi ?? '-',
+                $user->status ?? '-',
             ];
         });
     }
@@ -38,10 +35,10 @@ class UsersExport implements FromCollection, WithHeadings
             'Nama',
             'Email',
             'Level',
-            'Nama Karyawan',
-            'Alamat',
-            'Jabatan',
-            'Agama',
+            'Nama Mekanik',
+            'No HP',
+            'Spesialisasi',
+            'Status',
         ];
     }
 }
