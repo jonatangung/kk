@@ -6,7 +6,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="/edit_users_aksi/{{ $row->id }}" method="POST">
+            <form action="/edit_users_aksi/{{ $row->id }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -31,6 +31,17 @@
                 <div class="mb-3">
                     <label class="fw-semibold">No HP</label>
                     <input type="text" name="no_hp" value="{{ $row->no_hp }}" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold">Foto Profil</label>
+                    @if ($row->foto)
+                        <div class="mb-2">
+                            <img src="{{ asset('uploads/users/' . $row->foto) }}" alt="Foto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                        </div>
+                    @endif
+                    <input type="file" name="foto" class="form-control" accept="image/*">
+                    <small class="text-muted">Kosongkan jika tidak ingin mengubah foto.</small>
                 </div>
 
                 <button class="btn btn-warning" type="submit">Perbarui</button>

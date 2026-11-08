@@ -53,6 +53,8 @@ class logincontroller extends Controller
            'email' => $request->e,
            'password' => $request->p,
            'role' => 'admin',
+           'no_hp' => null,
+           'foto' => $this->simpanFoto($request->file('foto')),
            'is_active' => 1,
            'created_at' => now(),
            'updated_at' => now(),
@@ -801,7 +803,7 @@ class logincontroller extends Controller
     {
         return view('pengguna', [
             'rows' => DB::table('users')
-                ->select('id', 'nama', 'email', 'role', 'no_hp', 'is_active', 'created_at')
+                ->select('id', 'nama', 'email', 'role', 'no_hp', 'foto', 'is_active', 'created_at')
                 ->get(),
         ]);
     }
@@ -819,6 +821,7 @@ class logincontroller extends Controller
             'password' => $request->password,
             'role' => $request->role,
             'no_hp' => $request->no_hp,
+            'foto' => $this->simpanFoto($request->file('foto')),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -835,66 +838,75 @@ class logincontroller extends Controller
 
     public function updatePengguna(Request $request, $id)
     {
-        DB::table('users')->where('id', $id)->update([
+        $user = DB::table('users')->where('id', $id)->first();
+        $data = [
             'nama' => $request->nama,
             'email' => $request->email,
             'role' => $request->role,
             'no_hp' => $request->no_hp,
             'updated_at' => now(),
-        ]);
+        ];
+
+        if ($request->hasFile('foto')) {
+            if ($user && $user->foto) {
+                $this->hapusFoto($user->foto);
+            }
+            $data['foto'] = $this->simpanFoto($request->file('foto'));
+        }
+
+        DB::table('users')->where('id', $id)->update($data);
         return redirect('/pengguna');
     }
 
     public function hapusPengguna($id)
     {
+        $user = DB::table('users')->where('id', $id)->first();
+        if ($user && $user->foto) {
+            $this->hapusFoto($user->foto);
+        }
         DB::table('users')->where('id', $id)->delete();
         return redirect('/pengguna');
     }
 
+    private function simpanFoto($file)
+    {
+        if (!$file) {
+            return null;
+        }
+
+        $folder = public_path('uploads/users');
+        if (!is_dir($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
+        $namaFile = uniqid('foto_') . '.' . $file->getClientOriginalExtension();
+        $file->move($folder, $namaFile);
+
+        return $namaFile;
+    }
+
+    private function hapusFoto($namaFile)
+    {
+        $path = public_path('uploads/users/' . $namaFile);
+        if (file_exists($path)) {
+            unlink($path);
+        }
+    }
+    //----------------------------LAPORAN----------------------------
+
     public function laporanServis(Request $request)
     {
-        return view('laporan-servis', ['rows' => $this->laporanServisData($request)]);
-    }
-
-    public function laporanServisPdf(Request $request)
-    {
         $rows = $this->laporanServisData($request);
+        $table = $this->laporanServisTableHtml($rows);
 
-        $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetCreator('Sistem Informasi Bengkel Motor');
-        $pdf->SetTitle('Laporan Servis');
-        $pdf->SetMargins(15, 15, 15);
-        $pdf->SetAutoPageBreak(true, 15);
-        $pdf->AddPage();
+        if ($request->export === 'pdf') {
+            return $this->downloadPdf('Laporan Servis', 'Laporan_Servis', $table, $request);
+        }
+        if ($request->export === 'excel') {
+            return $this->downloadExcel('Laporan Servis', 'Laporan_Servis', $table, $request);
+        }
 
-        $periode = 'Periode: ' . ($request->from ?: 'awal') . ' s/d ' . ($request->to ?: 'akhir');
-        $html = '<h2 style="text-align:center">Laporan Servis</h2>'
-            . '<p style="text-align:center;font-size:10px">'
-            . e($periode) . ' | Dicetak: ' . now()->format('d/m/Y H:i')
-            . '</p>'
-            . $this->laporanServisTableHtml($rows);
-
-        $pdf->writeHTML($html, true, false, true, false, '');
-        $pdf->Output('Laporan_Servis.pdf', 'D');
-    }
-
-    public function laporanServisExcel(Request $request)
-    {
-        $rows = $this->laporanServisData($request);
-
-        $periode = 'Periode: ' . ($request->from ?: 'awal') . ' s/d ' . ($request->to ?: 'akhir');
-        $html = '<html><head><meta charset="utf-8"></head><body>'
-            . '<h2 style="text-align:center">Laporan Servis</h2>'
-            . '<p style="text-align:center">'
-            . e($periode) . ' | Dicetak: ' . now()->format('d/m/Y H:i')
-            . '</p>'
-            . $this->laporanServisTableHtml($rows)
-            . '</body></html>';
-
-        return response("\xEF\xBB\xBF" . $html, 200, [
-            'Content-Type' => 'application/vnd.ms-excel',
-            'Content-Disposition' => 'attachment; filename="Laporan_Servis.xls"',
-        ]);
+        return view('laporan-servis', ['rows' => $rows]);
     }
 
     private function laporanServisData(Request $request)
@@ -950,48 +962,17 @@ class logincontroller extends Controller
 
     public function laporanPendapatan(Request $request)
     {
-        return view('laporan-pendapatan', $this->laporanPendapatanData($request));
-    }
-
-    public function laporanPendapatanPdf(Request $request)
-    {
         $data = $this->laporanPendapatanData($request);
+        $table = $this->laporanPendapatanTableHtml($data['rows'], $data['jasaByServis'], $data['totalPendapatan']);
 
-        $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetCreator('Sistem Informasi Bengkel Motor');
-        $pdf->SetTitle('Laporan Pendapatan');
-        $pdf->SetMargins(15, 15, 15);
-        $pdf->SetAutoPageBreak(true, 15);
-        $pdf->AddPage();
+        if ($request->export === 'pdf') {
+            return $this->downloadPdf('Laporan Pendapatan', 'Laporan_Pendapatan', $table, $request);
+        }
+        if ($request->export === 'excel') {
+            return $this->downloadExcel('Laporan Pendapatan', 'Laporan_Pendapatan', $table, $request);
+        }
 
-        $periode = 'Periode: ' . ($request->from ?: 'awal') . ' s/d ' . ($request->to ?: 'akhir');
-        $html = '<h2 style="text-align:center">Laporan Pendapatan</h2>'
-            . '<p style="text-align:center;font-size:10px">'
-            . e($periode) . ' | Dicetak: ' . now()->format('d/m/Y H:i')
-            . '</p>'
-            . $this->laporanPendapatanTableHtml($data['rows'], $data['jasaByServis'], $data['totalPendapatan']);
-
-        $pdf->writeHTML($html, true, false, true, false, '');
-        $pdf->Output('Laporan_Pendapatan.pdf', 'D');
-    }
-
-    public function laporanPendapatanExcel(Request $request)
-    {
-        $data = $this->laporanPendapatanData($request);
-
-        $periode = 'Periode: ' . ($request->from ?: 'awal') . ' s/d ' . ($request->to ?: 'akhir');
-        $html = '<html><head><meta charset="utf-8"></head><body>'
-            . '<h2 style="text-align:center">Laporan Pendapatan</h2>'
-            . '<p style="text-align:center">'
-            . e($periode) . ' | Dicetak: ' . now()->format('d/m/Y H:i')
-            . '</p>'
-            . $this->laporanPendapatanTableHtml($data['rows'], $data['jasaByServis'], $data['totalPendapatan'])
-            . '</body></html>';
-
-        return response("\xEF\xBB\xBF" . $html, 200, [
-            'Content-Type' => 'application/vnd.ms-excel',
-            'Content-Disposition' => 'attachment; filename="Laporan_Pendapatan.xls"',
-        ]);
+        return view('laporan-pendapatan', $data);
     }
 
     private function laporanPendapatanData(Request $request)
@@ -1097,6 +1078,43 @@ class logincontroller extends Controller
         session(['u' => $request->nama]);
 
         return redirect('/profil');
+    }
+
+    // ==================== EXPORT LAPORAN ====================
+
+    private function laporanHeaderHtml(string $title, Request $request): string
+    {
+        $periode = 'Periode: ' . ($request->from ?: 'awal') . ' s/d ' . ($request->to ?: 'akhir');
+
+        return '<h2 style="text-align:center">' . e($title) . '</h2>'
+            . '<p style="text-align:center;font-size:10px">'
+            . e($periode) . ' | Dicetak: ' . now()->format('d/m/Y H:i')
+            . '</p>';
+    }
+
+    private function downloadPdf(string $title, string $filename, string $tableHtml, Request $request)
+    {
+        $pdf = new \TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetCreator('Sistem Informasi Bengkel Motor');
+        $pdf->SetTitle($title);
+        $pdf->SetMargins(15, 15, 15);
+        $pdf->SetAutoPageBreak(true, 15);
+        $pdf->AddPage();
+        $pdf->writeHTML($this->laporanHeaderHtml($title, $request) . $tableHtml, true, false, true, false, '');
+        $pdf->Output($filename . '.pdf', 'D');
+    }
+
+    private function downloadExcel(string $title, string $filename, string $tableHtml, Request $request)
+    {
+        $html = '<html><head><meta charset="utf-8"></head><body>'
+            . $this->laporanHeaderHtml($title, $request)
+            . $tableHtml
+            . '</body></html>';
+
+        return response("\xEF\xBB\xBF" . $html, 200, [
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '.xls"',
+        ]);
     }
 
 }

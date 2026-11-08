@@ -14,8 +14,8 @@
         <button type="submit" class="btn btn-secondary">Filter</button>
         <a href="/laporan-servis" class="btn btn-secondary">Reset</a>
         <button type="button" class="btn btn-secondary" onclick="window.print()">Print</button>
-        <a href="/laporan-servis/pdf?from={{ request('from') }}&to={{ request('to') }}" class="btn btn-danger">PDF</a>
-        <a href="/laporan-servis/excel?from={{ request('from') }}&to={{ request('to') }}" class="btn btn-success">Excel</a>
+        <a href="/laporan-servis?from={{ request('from') }}&to={{ request('to') }}&export=pdf" class="btn btn-danger">PDF</a>
+        <a href="/laporan-servis?from={{ request('from') }}&to={{ request('to') }}&export=excel" class="btn btn-success">Excel</a>
     </form>
 
     <div class="card mt-3">

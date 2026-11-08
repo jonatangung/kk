@@ -6,7 +6,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="/tambah_users_aksi" method="POST">
+            <form action="/tambah_users_aksi" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -37,6 +37,11 @@
                 <div class="mb-3">
                     <label class="fw-semibold">No HP</label>
                     <input type="text" name="no_hp" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold">Foto Profil</label>
+                    <input type="file" name="foto" class="form-control" accept="image/*" required>
                 </div>
 
                 <button class="btn btn-primary" type="submit">Simpan</button>

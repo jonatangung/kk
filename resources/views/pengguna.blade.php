@@ -14,6 +14,7 @@
                 <thead class="table-dark text-center">
                     <tr>
                         <th>No</th>
+                        <th>Foto</th>
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Role</th>
@@ -27,6 +28,13 @@
                     @foreach ($rows as $value)
                         <tr>
                             <td><?= $no++ ?></td>
+                            <td class="text-center">
+                                @if ($value->foto)
+                                    <img src="{{ asset('uploads/users/' . $value->foto) }}" alt="Foto" style="width: 45px; height: 45px; object-fit: cover; border-radius: 50%;">
+                                @else
+                                    <img src="{{ asset('assets/img/default-user.png') }}" alt="Foto" style="width: 45px; height: 45px; object-fit: cover; border-radius: 50%;" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($value->nama) }}&background=random'">
+                                @endif
+                            </td>
                             <td><?= $value->nama ?></td>
                             <td><?= $value->email ?></td>
                             <td><?= $value->role ?></td>

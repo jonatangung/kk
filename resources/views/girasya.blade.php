@@ -15,7 +15,7 @@
                 
                 <h2 class="text-center fw-bold mb-4 text-dark">SIGN UP</h2>
                 
-                <form action="/input" method="POST">
+                <form action="/input" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="mb-3">
@@ -31,6 +31,11 @@
                     <div class="mb-4">
                         <label for="password" class="form-label fw-semibold">Password:</label>
                         <input type="password" name="p" id="password" class="form-control" required placeholder="Masukkan password">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="foto" class="form-label fw-semibold">Foto Profil:</label>
+                        <input type="file" name="foto" id="foto" class="form-control" accept="image/*" required>
                     </div>
                     
                     <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-semibold">Daftar</button>

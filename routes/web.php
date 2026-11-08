@@ -67,11 +67,7 @@ Route::post('/hapus_pembayaran/{id}', 'App\Http\Controllers\logincontroller@hapu
 
 // Laporan
 Route::get('/laporan-servis', 'App\Http\Controllers\logincontroller@laporanServis');
-Route::get('/laporan-servis/pdf', 'App\Http\Controllers\logincontroller@laporanServisPdf');
-Route::get('/laporan-servis/excel', 'App\Http\Controllers\logincontroller@laporanServisExcel');
 Route::get('/laporan-pendapatan', 'App\Http\Controllers\logincontroller@laporanPendapatan');
-Route::get('/laporan-pendapatan/pdf', 'App\Http\Controllers\logincontroller@laporanPendapatanPdf');
-Route::get('/laporan-pendapatan/excel', 'App\Http\Controllers\logincontroller@laporanPendapatanExcel');
 Route::get('/stok-barang', 'App\Http\Controllers\logincontroller@stokBarang');
 Route::get('/input_stok_barang', 'App\Http\Controllers\logincontroller@inputStokBarang');
 Route::post('/stok-barang_keluar/{id}', 'App\Http\Controllers\logincontroller@stokKeluar');
