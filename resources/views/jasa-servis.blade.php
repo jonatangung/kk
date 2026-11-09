@@ -4,7 +4,14 @@
 
     <h1 class="mb-3">Data Jasa Servis</h1>
 
-    <a href="/tambah_jasa_servis" class="btn btn-secondary mb-3">Tambah Jasa Servis</a>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
+        <a href="/tambah_jasa_servis" class="btn btn-secondary">Tambah Jasa Servis</a>
+        <div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+            <a href="/jasa-servis/pdf" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+            <a href="/jasa-servis/excel" class="btn btn-success btn-sm">Export Excel</a>
+        </div>
+    </div>
 
     <div class="card mt-3">
         <div class="card-body table-responsive">

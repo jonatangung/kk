@@ -6,9 +6,29 @@
 
     <div class="card">
         <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
             @if ($user)
-                <form method="POST" action="/profil">
+                <form method="POST" action="/profil" enctype="multipart/form-data">
                     @csrf
+
+                    <div class="mb-3 text-center">
+                        @if ($user->foto)
+                            <img src="{{ asset('uploads/users/' . $user->foto) }}" alt="Foto" class="rounded-circle mb-2" style="width: 90px; height: 90px; object-fit: cover;">
+                        @else
+                            <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="Foto" class="rounded-circle mb-2" style="width: 90px; height: 90px; object-fit: cover;">
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Foto Profil</label>
+                        <input type="file" name="foto" class="form-control" accept="image/*">
+                        <small class="text-muted">Kosongkan jika tidak ingin mengubah foto.</small>
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Nama Pengguna</label>

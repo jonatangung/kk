@@ -6,6 +6,12 @@
 
     <div class="card">
         <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
             <form action="/edit_users_aksi/{{ $row->id }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
@@ -22,7 +28,7 @@
                 <div class="mb-3">
                     <label class="fw-semibold">Role</label>
                     <select name="role" class="form-control" required>
-                        @foreach (['admin' => 'Admin', 'kasir' => 'Kasir', 'mekanik' => 'Mekanik', 'owner' => 'Owner'] as $value => $label)
+                        @foreach (['owner' => 'Owner', 'admin' => 'Admin', 'kasir' => 'Kasir', 'karyawan' => 'Karyawan', 'mekanik' => 'Mekanik'] as $value => $label)
                             <option value="{{ $value }}" @selected($row->role == $value)>{{ $label }}</option>
                         @endforeach
                     </select>
@@ -32,6 +38,7 @@
                     <label class="fw-semibold">No HP</label>
                     <input type="text" name="no_hp" value="{{ $row->no_hp }}" class="form-control">
                 </div>
+
 
                 <div class="mb-3">
                     <label class="fw-semibold">Foto Profil</label>

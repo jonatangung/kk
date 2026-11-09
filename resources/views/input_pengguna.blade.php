@@ -6,6 +6,12 @@
 
     <div class="card">
         <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
             <form action="/tambah_users_aksi" method="POST" enctype="multipart/form-data">
                 @csrf
 
@@ -28,7 +34,7 @@
                     <label class="fw-semibold">Role</label>
                     <select name="role" class="form-control" required>
                         <option value="">-- Pilih Role --</option>
-                        @foreach (['admin' => 'Admin', 'kasir' => 'Kasir', 'mekanik' => 'Mekanik', 'owner' => 'Owner'] as $value => $label)
+                        @foreach (['owner' => 'Owner', 'admin' => 'Admin', 'kasir' => 'Kasir', 'karyawan' => 'Karyawan', 'mekanik' => 'Mekanik'] as $value => $label)
                             <option value="{{ $value }}" @selected(old('role') == $value)>{{ $label }}</option>
                         @endforeach
                     </select>

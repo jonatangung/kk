@@ -1,3 +1,4 @@
+@php $role = session('role'); @endphp
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -9,6 +10,7 @@
             </a>
         </li>
 
+        @if (in_array($role, ['owner', 'kasir']))
         <li class="nav-heading">Menu Master Data</li>
 
         <li class="nav-item">
@@ -17,18 +19,13 @@
                 <span>Data Pelanggan</span>
             </a>
         </li>
+        @endif
 
+        @if (in_array($role, ['owner', 'admin']))
         <li class="nav-item">
             <a class="nav-link collapsed" href="/mekanik">
                 <i class="bi bi-tools"></i>
                 <span>Data Mekanik</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="/kendaraan">
-                <i class="bi bi-car-front"></i>
-                <span>Data Kendaraan</span>
             </a>
         </li>
 
@@ -38,14 +35,27 @@
                 <span>Data Jasa Servis</span>
             </a>
         </li>
+        @endif
 
+        @if ($role === 'owner')
         <li class="nav-item">
             <a class="nav-link collapsed" href="/supplier">
                 <i class="bi bi-truck"></i>
                 <span>Data Supplier</span>
             </a>
         </li>
+        @endif
 
+        @if (in_array($role, ['owner', 'karyawan']))
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/kendaraan">
+                <i class="bi bi-car-front"></i>
+                <span>Data Kendaraan</span>
+            </a>
+        </li>
+        @endif
+
+        @if (in_array($role, ['owner', 'kasir']))
         <li class="nav-heading">Menu Transaksi</li>
 
         <li class="nav-item">
@@ -54,14 +64,18 @@
                 <span>Transaksi Servis</span>
             </a>
         </li>
+        @endif
 
+        @if ($role === 'owner')
         <li class="nav-item">
             <a class="nav-link collapsed" href="/pembayaran">
                 <i class="bi bi-cash-stack"></i>
                 <span>Pembayaran</span>
             </a>
         </li>
+        @endif
 
+        @if (in_array($role, ['owner', 'admin', 'mekanik']))
         <li class="nav-heading">Menu Laporan</li>
 
         <li class="nav-item">
@@ -70,7 +84,9 @@
                 <span>Laporan Servis</span>
             </a>
         </li>
+        @endif
 
+        @if (in_array($role, ['owner', 'admin']))
         <li class="nav-item">
             <a class="nav-link collapsed" href="/laporan-pendapatan">
                 <i class="bi bi-bar-chart"></i>
@@ -95,6 +111,7 @@
                 <span>Manajemen Pengguna</span>
             </a>
         </li>
+        @endif
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="/profil">

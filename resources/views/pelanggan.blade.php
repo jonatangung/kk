@@ -4,18 +4,16 @@
 
     <h1 class="mb-3">Data Pelanggan</h1>
 
-    <a href="/tplg" class="btn btn-secondary mb-3">Tambah Pelanggan</a>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
+        <a href="/tplg" class="btn btn-secondary">Tambah Pelanggan</a>
+        <div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+            <a href="{{ '/pelanggan/pdf' . (request()->getQueryString() ? '?' . request()->getQueryString() : '') }}" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+            <a href="{{ '/pelanggan/excel' . (request()->getQueryString() ? '?' . request()->getQueryString() : '') }}" class="btn btn-success btn-sm">Export Excel</a>
+        </div>
+    </div>
 
-    <form class="no-print d-flex flex-wrap align-items-center gap-3 mb-4" action="{{ url('/pelanggan') }}" method="GET">
-        <label for="from" class="fw-semibold text-nowrap">Dari Tanggal:</label>
-        <input type="date" id="from" name="from" value="{{ request('from') }}" class="form-control w-auto">
-
-        <label for="to" class="fw-semibold text-nowrap">Sampai Tanggal:</label>
-        <input type="date" id="to" name="to" value="{{ request('to') }}" class="form-control w-auto">
-
-        <button type="submit" class="btn btn-secondary">Filter</button>
-        <a href="/pelanggan" class="btn btn-secondary me-3">Reset</a>
-    </form>
+    
 
     <div class="card mt-3">
         <div class="card-body table-responsive">

@@ -12,7 +12,12 @@
         
         <div class="card shadow border-0 p-4" style="width: 100%; max-width: 400px; border-radius: 12px;">
             <div class="card-body">
-                
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
                 <h2 class="text-center fw-bold mb-4 text-dark">SIGN UP</h2>
                 
                 <form action="/input" method="POST" enctype="multipart/form-data">

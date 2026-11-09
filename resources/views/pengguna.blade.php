@@ -4,7 +4,10 @@
 
     <h1 class="mb-3">Manajemen Pengguna</h1>
 
-    <a href="/tambah_users" class="btn btn-secondary mb-3">Tambah Pengguna</a>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
+        <a href="/tambah_users" class="btn btn-secondary">Tambah Pengguna</a>
+      
+    </div>
 
     <div class="card mt-3">
         <div class="card-body table-responsive">

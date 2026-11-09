@@ -4,7 +4,14 @@
 
     <h1 class="mb-3">Data Mekanik</h1>
 
-    <a href="/tkry" class="btn btn-secondary mb-3">Tambah Mekanik</a>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
+        <a href="/tkry" class="btn btn-secondary">Tambah Mekanik</a>
+        <div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+            <a href="/mekanik/pdf" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+            <a href="/mekanik/excel" class="btn btn-success btn-sm">Export Excel</a>
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-body table-responsive">

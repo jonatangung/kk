@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Middleware\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 
+//--- Middleware bawaan Laravel: fungsi untuk mempercayai proxy (misal load balancer) agar IP asli client terbaca
+//--- Dipakai oleh SEMUA request ke aplikasi ini karena didaftarkan di $middleware (global) di app/Http/Kernel.php baris 18.
+//--- File terkait: semua route di routes/web.php dan semua controller di app/Http/Controllers/.
 class TrustProxies extends Middleware
 {
     /**
@@ -12,6 +15,7 @@ class TrustProxies extends Middleware
      *
      * @var array<int, string>|string|null
      */
+    //--- Daftar IP proxy yang dipercaya (kosongkan jika tidak memakai proxy)
     protected $proxies;
 
     /**

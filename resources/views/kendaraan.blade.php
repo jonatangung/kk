@@ -4,7 +4,14 @@
 
     <h1 class="mb-3">Data Kendaraan</h1>
 
-    <a href="/tambah_kendaraan" class="btn btn-secondary mb-3">Tambah Kendaraan</a>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
+        <a href="/tambah_kendaraan" class="btn btn-secondary">Tambah Kendaraan</a>
+        <div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+            <a href="/kendaraan/pdf" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+            <a href="/kendaraan/excel" class="btn btn-success btn-sm">Export Excel</a>
+        </div>
+    </div>
 
     <div class="card mt-3">
         <div class="card-body table-responsive">
@@ -15,7 +22,7 @@
                     <tr>
                         <th>No</th>
                         <th>No Polisi</th>
-                        <th>Pelanggan ID</th>
+                        <th>Pelanggan</th>
                         <th>Merk</th>
                         <th>Model</th>
                         <th>Tahun</th>
@@ -29,7 +36,7 @@
                         <tr>
                             <td><?= $no++ ?></td>
                             <td><?= $value->no_polisi ?></td>
-                            <td><?= $value->pelanggan_id ?></td>
+                            <td><?= $value->nama_pelanggan ?></td>
                             <td><?= $value->merk ?></td>
                             <td><?= $value->model ?></td>
                             <td><?= $value->tahun ?></td>

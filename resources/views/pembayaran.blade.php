@@ -4,6 +4,12 @@
 
     <h1 class="mb-3">Pembayaran</h1>
 
+    <div class="d-flex flex-wrap justify-content-end align-items-center mb-3 gap-2 no-print">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+        <a href="/pembayaran/pdf" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+        <a href="/pembayaran/excel" class="btn btn-success btn-sm">Export Excel</a>
+    </div>
+
     <div class="card mt-3">
         <div class="card-body table-responsive">
             <h5 class="card-title">Pembayaran</h5>

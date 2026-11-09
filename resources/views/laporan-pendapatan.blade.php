@@ -2,7 +2,26 @@
 
 @section('content')
 
-    <h1 class="mb-3">Laporan Pendapatan</h1>
+    <style>
+        @media print {
+            #header, #sidebar, .footer, .no-print, .page-title {
+                display: none !important;
+            }
+            #main.main {
+                margin-left: 0 !important;
+                padding: 15px !important;
+            }
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+            }
+            .table-responsive {
+                overflow: visible !important;
+            }
+        }
+    </style>
+
+    <h1 class="mb-3 page-title">Laporan Pendapatan</h1>
 
     <form class="no-print d-flex flex-wrap align-items-center gap-3 mb-4" action="{{ url('/laporan-pendapatan') }}" method="GET">
         <label for="from" class="fw-semibold text-nowrap">Dari Tanggal:</label>

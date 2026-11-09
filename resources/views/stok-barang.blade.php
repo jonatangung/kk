@@ -4,7 +4,14 @@
 
     <h1 class="mb-3">Stok Barang</h1>
 
-    <a href="/input_stok_barang" class="btn btn-primary mb-3">Kelola Stok</a>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
+        <a href="/input_stok_barang" class="btn btn-primary">Kelola Stok</a>
+        <div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+            <a href="/stok-barang/pdf" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+            <a href="/stok-barang/excel" class="btn btn-success btn-sm">Export Excel</a>
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-body table-responsive">
