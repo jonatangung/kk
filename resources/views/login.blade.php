@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
-    <link href="{{ asset('assets/img/motor-logo.svg') }}" rel="icon">
+    <title><?php echo $dataSetting['nama_usaha']; ?></title>
+    <link href="<?php echo $dataSetting['ikon_url']; ?>" rel="icon">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
@@ -20,9 +20,9 @@
                     <div class="card-body pt-4">
 
                         <div class="text-center mb-5">
-                            <img src="{{ asset('assets/img/download (1).jpeg') }}" alt="Logo" height="64">
+                            <img src="<?php echo $dataSetting['logo_url']; ?>" alt="Logo" height="64">
                             <h2 class="fw-bold mt-3 mb-1">LOGIN</h2>
-                            <p class="text-muted small mb-0">Bengkel Pintar</p>
+                            <p class="text-muted small mb-0"><?php echo $dataSetting['nama_usaha']; ?></p>
                         </div>
 
                         <form method="POST" action="/login">

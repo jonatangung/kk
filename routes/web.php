@@ -137,6 +137,10 @@ Route::middleware(['auth', 'level:admin'])->group(function () {
     Route::get('/edit_users/{id}', 'App\Http\Controllers\PenggunaController@editPengguna');
     Route::post('/edit_users_aksi/{id}', 'App\Http\Controllers\PenggunaController@updatePengguna');
     Route::post('/hapus_users/{id}', 'App\Http\Controllers\PenggunaController@hapusPengguna');
+
+    // Setting (khusus admin — identitas usaha)
+    Route::get('/setting', 'App\Http\Controllers\SettingController@index');
+    Route::post('/setting/aksi', 'App\Http\Controllers\SettingController@update');
 });
 
 // =============================

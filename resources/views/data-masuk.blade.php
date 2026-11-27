@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Data Masuk - Bengkel Pintar</title>
+  <title>Data Masuk - <?php echo $dataSetting['nama_usaha']; ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{ asset('assets/img/motor-logo.svg') }}" rel="icon">
-  <link href="{{ asset('assets/img/motor-logo.svg') }}" rel="apple-touch-icon">
+  <link href="<?php echo $dataSetting['ikon_url']; ?>" rel="icon">
+  <link href="<?php echo $dataSetting['ikon_url']; ?>" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">

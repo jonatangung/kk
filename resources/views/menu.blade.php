@@ -140,6 +140,15 @@
         </li>
         <?php } ?>
 
+        <?php if (session('role') === 'admin') { ?>
+        <li class="nav-item">
+            <a class="<?= $navClass(['setting', 'setting/*']) ?>" href="/setting">
+                <i class="bi bi-sliders"></i>
+                <span>Setting</span>
+            </a>
+        </li>
+        <?php } ?>
+
         <li class="nav-item">
             <a class="<?= $navClass(['profil']) ?>" href="/profil">
                 <i class="bi bi-gear"></i>

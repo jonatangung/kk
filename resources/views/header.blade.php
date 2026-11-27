@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Bengkel Pintar</title>
+  <title><?php echo $dataSetting['nama_usaha']; ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{ asset('assets/img/motor-logo.svg') }}" rel="icon">
-  <link href="{{ asset('assets/img/motor-logo.svg') }}" rel="apple-touch-icon">
+  <link href="<?php echo $dataSetting['ikon_url']; ?>" rel="icon">
+  <link href="<?php echo $dataSetting['ikon_url']; ?>" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -58,8 +58,10 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="/home" class="logo d-flex align-items-center">
-        <img src="{{ asset('assets/img/download (1).jpeg') }}" alt="">
-        <span class="d-none d-lg-block">Bengkel Pintar</span>
+        <img src="<?php echo $dataSetting['logo_url']; ?>" alt="" style="height: 32px; width: auto; margin-right: 10px;">
+        <span class="d-none d-lg-block" style="line-height: 1.3;">
+          <span style="font-size: 1rem; font-weight: 700; display: block; letter-spacing: 0.5px;"><?php echo $dataSetting['nama_usaha']; ?></span>
+        </span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->

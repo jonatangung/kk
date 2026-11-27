@@ -18,5 +18,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        //----- Isi data default tabel setting (identitas usaha)
+        $this->call(SettingSeeder::class);
     }
 }
